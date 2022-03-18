@@ -15,6 +15,7 @@ namespace MyFirstMediatorWebApi.Controllers
         {
             _mediator = mediator;
         }
+
         [HttpGet]
         [Route("SendNotification")]
         public async Task SendNotification(string message)

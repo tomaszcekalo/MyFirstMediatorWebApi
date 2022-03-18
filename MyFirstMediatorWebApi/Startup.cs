@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using MyFirstMediatorWebApi.PipelineBehaviours;
 
 namespace MyFirstMediatorWebApi
 {
@@ -26,6 +27,8 @@ namespace MyFirstMediatorWebApi
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "MyFirstMediatorWebApi", Version = "v1" });
             });
             services.AddMediatR(typeof(Startup).Assembly);
+            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(TracingBehaviour<,>));
+            services.AddSingleton(typeof(IPipelineBehavior<,>), typeof(CachingBehaviour<,>));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
